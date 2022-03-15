@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "data_" {
+resource "aws_s3_bucket" "data" {
   # bucket is public
   # bucket is not encrypted
   # bucket does not have access logs
@@ -18,10 +18,13 @@ resource "aws_rds_cluster" "app1-rds-cluster" {
 }
 
 resource "aws_instance" "ec2_vm" {
+	# checkov:skip=CKV_AWS_79: ADD REASON
   # ec2 has no monitoring enabled
   # ec2 has Instance Metadata Service Version 1 enabled
   # ec2 is not EBS optimized
   ami                       = "${var.ami}"
   instance_type             = "${var.instance_type}"
   subnet_id                 = "${var.subnet_id}"
+  ebs_optimized = true
 }
+
